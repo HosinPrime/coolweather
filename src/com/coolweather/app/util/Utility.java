@@ -7,6 +7,7 @@ import com.coolweather.app.model.Province;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 public class Utility {
 
@@ -44,6 +45,8 @@ public class Utility {
 				{
 					String[] array=p.split("\\|");
 					City city=new City();
+				//	Log.d("code", array[0]);
+				//	Log.d("city1",array[1]);
 					city.setCityCode(array[0]);
 					city.setCityName(array[1]);
 					city.setProvinceId(provinceId);

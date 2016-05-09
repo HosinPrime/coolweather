@@ -13,11 +13,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class CoolWeatherDB {
 
 	//数据库名
-	public static final String DB_NAME="cool_weather";
+	public static final String DB_NAME="cool_weather.db";
 	
 	//数据库版本
 	public static final int VERSION=1;
@@ -85,6 +86,7 @@ public class CoolWeatherDB {
 		if(city!=null)
 		{
   			ContentValues values=new ContentValues();
+  			//Log.d("city",city.getCityName());
 	        values.put("city_name",city.getCityName());
 	        values.put("city_code", city.getCityCode());
 	        values.put("province_id", city.getProvinceId());
@@ -107,6 +109,7 @@ public class CoolWeatherDB {
 				city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
 				city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
 				city.setProvinceId(provinceId);
+				list.add(city);
 			}while(cursor.moveToNext());
 			
 		}

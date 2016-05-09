@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -110,12 +111,14 @@ public class ChooseAreaActivity extends Activity{
 	private void queryCities() {
 		// TODO Auto-generated method stub
 		cityList = coolWeatherDB.loadCities(selectedProvince.getId());
+		Log.d("dd", "查询");
 		if(cityList.size()>0)
 		{
 			dataList.clear();
 			for(City city:cityList)
 			{
 				dataList.add(city.getCityName());
+				Log.d("enter",city.getCityName());
 			}
 			adapter.notifyDataSetChanged();
 			listView.setSelection(0);
@@ -123,12 +126,14 @@ public class ChooseAreaActivity extends Activity{
 			currentLevel=LEVEL_CITY;
 		}else{
 			queryFromServer(selectedProvince.getProvinceCode(),"city");
+			Log.d("dd","联机");
 		}
 		
 	}
 	
 	private void queryCounties() {
 		countyList = coolWeatherDB.loadCounties(selectedCity.getId());
+		
 		if(countyList.size()>0)
 		{
 			dataList.clear();
@@ -152,6 +157,7 @@ public class ChooseAreaActivity extends Activity{
 		if(!TextUtils.isEmpty(Code))
 		{
 			address="http://www.weather.com.cn/data/list3/city"+Code+".xml";
+		//	Log.d("adress",address);
 		}else{
 			address="http://www.weather.com.cn/data/list3/city.xml";
 		}
@@ -166,6 +172,7 @@ public class ChooseAreaActivity extends Activity{
 				{
 					result = Utility.handleProvincesResponse(coolWeatherDB, response);
 				}else if("city".equals(type)){
+				//	Log.d("dd","进入city");
 					result = Utility.handleCitiesResponse(coolWeatherDB, response, selectedProvince.getId());
 				}else if("county".equals(type)){
 					result = Utility.handleCountiesResponse(coolWeatherDB, response, selectedCity.getId());
